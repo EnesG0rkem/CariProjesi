@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace CariProjesi.Models
 {
-    public class Account
+    public class Account : BaseEntity
     {
-        public Guid AccountId { get; set; }
         public string? AccountName { get; set; }
         public string? AccountAddress { get; set; }
         public string? AccountDistrict { get; set; }
@@ -17,7 +16,5 @@ namespace CariProjesi.Models
         public string? AccountEmail { get; set; }
         public decimal AccountDebit { get; set; }
         public decimal AccountCredit { get; set; }
-        public bool IsDeleted { get; set; }
-
     }
 }
