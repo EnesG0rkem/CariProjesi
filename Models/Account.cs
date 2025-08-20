@@ -7,6 +7,7 @@ namespace CariProjesi.Models
 {
     public class Account : BaseEntity
     {
+        public string? AccountCode { get; set; }
         public string? AccountName { get; set; }
         public string? AccountAddress { get; set; }
         public string? AccountDistrict { get; set; }

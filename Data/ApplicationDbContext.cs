@@ -18,15 +18,15 @@ namespace CariProjesi.Data
             base.OnModelCreating(modelBuilder);
             
             modelBuilder.Entity<Account>()
-                .HasKey(a => a.Id);
+                .HasKey(a => a.AccountCode);
 
             modelBuilder.Entity<AccountMovement>()
-                .HasKey(am => am.Id);
+                .HasKey(am => am.AccoutMovementId);
 
             modelBuilder.Entity<AccountMovement>()
                 .HasOne<Account>()
                 .WithMany()
-                .HasForeignKey(am => am.AccountId);
+                .HasForeignKey(am => am.AccountCode);
         }
     }
 }
