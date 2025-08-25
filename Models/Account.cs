@@ -9,6 +9,7 @@ namespace CariProjesi.Models
     {
         public string? AccountCode { get; set; }
         public string? AccountName { get; set; }
+        public string? AccountSurname { get; set; }
         public string? AccountAddress { get; set; }
         public string? AccountDistrict { get; set; }
         public string? AccountCity { get; set; }

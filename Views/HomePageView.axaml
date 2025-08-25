@@ -1,0 +1,37 @@
+    <UserControl xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:vm="using:CariProje.ViewModels"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+            x:Class="CariProje.Views.HomePageView"
+            x:DataType="vm:HomePageViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="Background" Value="#22333b"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.3"/>
+                </Transitions>
+            </Setter>
+        </Style>
+
+        <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="#446877"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Design.DataContext>
+        <vm:HomePageViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto, 0.7*, Auto, Auto, Auto, *" Background="#eae0d5">
+        <TextBlock FontSize="50" Grid.Row="0" HorizontalAlignment="Center" Margin="0, 30, 0, 0">CARİ PROJE</TextBlock>
+        <Button Grid.Row="2" Command="{Binding GoToAccountPage}">CARİ EKRANI</Button>
+        <Button Grid.Row="3">HAREKET OLUŞTURMA EKRANI</Button>
+        <Button Grid.Row="4">RAPOR EKRANI</Button> 
+    </Grid>
+</UserControl>

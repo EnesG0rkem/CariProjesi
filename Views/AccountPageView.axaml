@@ -1,0 +1,112 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:CariProje.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="CariProje.Views.AccountPageView"
+        x:DataType="vm:AccountPageViewModel">
+
+
+    <Design.DataContext>
+        <vm:AccountPageViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto, Auto, *" Background="#7a7a7a">
+
+        <!-- Buttons -->
+        <Grid Row="0" ColumnDefinitions="Auto, Auto, Auto, Auto, *, Auto, Auto, Auto">
+            <Button Grid.Column="0" Margin="10">
+                BUL
+            </Button>
+            <Button Grid.Column="1" Margin="10">
+                DÜZENLE
+            </Button>
+            <Button Grid.Column="2" Margin="10">
+                SİL
+            </Button>
+            <Button Grid.Column="3" Margin="10" Click="OnClickSave">
+                KAYDET
+            </Button>
+            <Button Grid.Column="5" Margin="10">
+                HAREKET EKLE
+            </Button>
+            <Button Grid.Column="6" Margin="10">
+                RAPORU GÖRÜNTÜLE
+            </Button>
+            <Button Grid.Column="7" Margin="10" Command="{Binding GoToHomePage}">
+                ANA MENÜ
+            </Button>
+        </Grid>
+
+        <!-- Account form and search results -->
+        <Grid Grid.Row="1" Height="400" ColumnDefinitions="Auto, *">
+        
+            <!-- Account form -->
+            <Grid Grid.Column="0" RowDefinitions="3*, 3*, 4*, 3*, 3*">
+                <Grid Grid.Row="0">
+                    <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
+
+                        <TextBlock Text="Cari Kod" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                        <TextBox Name="AccountCodeTextBox" Width="150"/>
+
+                        <TextBlock Text="Cari Adı" Margin="50,0,10,0" VerticalAlignment="Center"/>
+                        <TextBox Name="AccountNameTextBox" Width="225"/>
+
+                        <TextBlock Text="Cari Soyadı" Margin="50,0,10,0" VerticalAlignment="Center"/>
+                        <TextBox Name="AccountSurnameTextBox" Width="175"/>
+
+                    </StackPanel>
+                </Grid>    
+
+                <Grid Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
+
+                        <TextBlock Text="Cari E-Posta" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                        <TextBox Name="AccountEmailTextBox" Width="774"/>
+
+                    </StackPanel>
+                </Grid> 
+
+                <Grid Grid.Row="2">
+                    <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
+
+                        <TextBlock Text="Cari Adres" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                        <TextBox Name="AccountAddressTextBox" Width="784" Height="60"/>
+                        
+                    </StackPanel>
+                </Grid> 
+
+                <Grid Grid.Row="3">
+                    <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
+
+                        <TextBlock Text="Cari Ülkesi" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                        <TextBox Name="AccountNationTextBox" Width="150"/>
+
+                        <TextBlock Text="Cari Şehir" Margin="41,0,10,0" VerticalAlignment="Center"/>
+                        <TextBox Name="AccountCityextBox" Width="225"/>
+
+                        <TextBlock Text="Cari İlçesi" Margin="41,0,10,0" VerticalAlignment="Center"/>
+                        <TextBox Name="AccountDistrictTextBox" Width="175"/>
+
+                    </StackPanel>
+                </Grid> 
+
+                <Grid Grid.Row="4">
+                    <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
+
+                        <TextBlock Text="Cari Telefon Numarası" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                        <TextBox Name="AccountPhoneNumberTextBox" Width="300"/>
+                        
+                    </StackPanel>
+                </Grid> 
+            </Grid>
+        
+            <!-- Search results -->
+            <Grid Grid.Column="1" Background="#984">
+                
+            </Grid>
+        </Grid>
+    </Grid>
+
+</UserControl>
