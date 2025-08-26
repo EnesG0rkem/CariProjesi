@@ -1,4 +1,6 @@
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
+using CariProjesi.Models;
 
 namespace CariProje.ViewModels;
 

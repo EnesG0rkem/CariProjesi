@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CariProje.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250820140732_entities_updated")]
-    partial class entities_updated
+    [Migration("20250825133149_cıldırdım")]
+    partial class cıldırdım
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,9 @@ namespace CariProje.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("AccountPhone")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AccountSurname")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDeleted")

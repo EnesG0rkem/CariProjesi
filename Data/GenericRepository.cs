@@ -23,11 +23,11 @@ namespace CariProjesi.Data
 
         public async Task AddAsync(TEntity entity)
         {
-            _dbSet.Add(entity);
+            await _dbSet.AddAsync(entity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(string id)
         {
             var entity = await GetByIdAsync(id);
             entity.IsDeleted = true; 
@@ -39,13 +39,9 @@ namespace CariProjesi.Data
             return await _dbSet.Where(e => !e.IsDeleted).ToListAsync();
         }
 
-        public async Task<TEntity> GetByIdAsync(Guid id)
+        public async Task<TEntity> GetByIdAsync(string id)
         {
             var entity = await _dbSet.FindAsync(id);
-            if (entity == null || entity.IsDeleted)
-            {
-                throw new KeyNotFoundException($"Entity with id {id} not found or is deleted.");
-            }
             return entity;
         }
 

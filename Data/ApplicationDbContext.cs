@@ -11,7 +11,8 @@ namespace CariProjesi.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=CariProjesi.db");
+            // Use absolute path to ensure runtime and tooling use the same database file
+            optionsBuilder.UseSqlite("Data Source=/Users/enesgorkem/Staj/CariProjesi/CariProjesi.db");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

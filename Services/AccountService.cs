@@ -17,12 +17,17 @@ namespace CariProjesi.Services
             _accountRepository = accountRepsoitory;
         }
 
+       // AccountService.cs
         public async Task AddAsync(Account entity)
         {
+            var exists = _accountRepository.Where(a => a.AccountCode == entity.AccountCode).Any();
+            if (exists)
+                throw new InvalidOperationException("Bu AccountCode ile zaten bir hesap var.");
+
             await _accountRepository.AddAsync(entity);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(string id)
         {
             await _accountRepository.DeleteAsync(id);
         }
@@ -32,7 +37,7 @@ namespace CariProjesi.Services
             return await _accountRepository.GetAllAsync();
         }
 
-        public async Task<Account> GetByIdAsync(Guid id)
+        public async Task<Account> GetByIdAsync(string id)
         {
             return await _accountRepository.GetByIdAsync(id);
         }

@@ -22,7 +22,7 @@ namespace CariProjesi.Services
             await _accountMovementRepository.AddAsync(entity);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(string id)
         {
             await _accountMovementRepository.DeleteAsync(id);
         }
@@ -32,7 +32,7 @@ namespace CariProjesi.Services
             return await _accountMovementRepository.GetAllAsync();
         }
 
-        public async Task<AccountMovement> GetByIdAsync(Guid id)
+        public async Task<AccountMovement> GetByIdAsync(string id)
         {
             return await _accountMovementRepository.GetByIdAsync(id);
         }

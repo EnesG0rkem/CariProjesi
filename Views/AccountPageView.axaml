@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:CariProje.ViewModels"
+        xmlns:m="using:CariProjesi.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -15,32 +16,18 @@
     <Grid RowDefinitions="Auto, Auto, *" Background="#7a7a7a">
 
         <!-- Buttons -->
-        <Grid Row="0" ColumnDefinitions="Auto, Auto, Auto, Auto, *, Auto, Auto, Auto">
-            <Button Grid.Column="0" Margin="10">
-                BUL
-            </Button>
-            <Button Grid.Column="1" Margin="10">
-                DÜZENLE
-            </Button>
-            <Button Grid.Column="2" Margin="10">
-                SİL
-            </Button>
-            <Button Grid.Column="3" Margin="10" Click="OnClickSave">
-                KAYDET
-            </Button>
-            <Button Grid.Column="5" Margin="10">
-                HAREKET EKLE
-            </Button>
-            <Button Grid.Column="6" Margin="10">
-                RAPORU GÖRÜNTÜLE
-            </Button>
-            <Button Grid.Column="7" Margin="10" Command="{Binding GoToHomePage}">
-                ANA MENÜ
-            </Button>
+        <Grid Row="0" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, *, Auto, Auto, Auto">
+            <Button Grid.Column="0" Margin="10" Content="BUL" Click="Find"/>
+            <Button Grid.Column="2" Margin="10" Content="CARİ SİL" Click="Delete"/>
+            <Button Grid.Column="3" Margin="10" Content="KAYDET" Click="OnClickSave"/>
+            <Button Grid.Column="4" Margin="10" Content="TEMİZLE" Click="Clear"/>
+            <Button Grid.Column="6" Margin="10" Content="HAREKET EKLE"/>
+            <Button Grid.Column="7" Margin="10" Content="RAPORU GÖRÜNTÜLE"/>
+            <Button Grid.Column="8" Margin="10" Content="ANA MENÜ" Command="{Binding GoToHomePage}"/>
         </Grid>
 
         <!-- Account form and search results -->
-        <Grid Grid.Row="1" Height="400" ColumnDefinitions="Auto, *">
+        <Grid Grid.Row="1" Height="400" ColumnDefinitions="Auto, *, Auto">
         
             <!-- Account form -->
             <Grid Grid.Column="0" RowDefinitions="3*, 3*, 4*, 3*, 3*">
@@ -84,7 +71,7 @@
                         <TextBox Name="AccountNationTextBox" Width="150"/>
 
                         <TextBlock Text="Cari Şehir" Margin="41,0,10,0" VerticalAlignment="Center"/>
-                        <TextBox Name="AccountCityextBox" Width="225"/>
+                        <TextBox Name="AccountCityTextBox" Width="225"/>
 
                         <TextBlock Text="Cari İlçesi" Margin="41,0,10,0" VerticalAlignment="Center"/>
                         <TextBox Name="AccountDistrictTextBox" Width="175"/>
@@ -103,9 +90,29 @@
             </Grid>
         
             <!-- Search results -->
-            <Grid Grid.Column="1" Background="#984">
-                
-            </Grid>
+            <Border Grid.Column="1" BorderBrush="Black" Background="rgba(43, 43, 43, 1)"
+                BorderThickness="2"
+                CornerRadius="5">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, *" >
+                            <TextBlock FontSize="20" Grid.Row="0" Grid.Column="0" Text="Cari Kodu" HorizontalAlignment="Center" VerticalAlignment="Center"/> 
+                            <TextBlock FontSize="20" Grid.Row="0" Grid.Column="1" Text="Cari Adı" HorizontalAlignment="Center" VerticalAlignment="Center"/>    
+                            <ListBox Name="AccountsList" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" SelectionChanged="Fill">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="m:Account" >
+                                        <Grid ColumnDefinitions="*, *" Margin="6">
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Text="{Binding AccountCode}"/>
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Text="{Binding AccountName}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
+                    </ScrollViewer>
+            </Border>
+
+            <!-- Blank space -->
+            <Grid Grid.Column="2" Width="10"/>
         </Grid>
     </Grid>
 
