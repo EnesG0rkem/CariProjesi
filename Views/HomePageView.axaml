@@ -31,7 +31,8 @@
     <Grid RowDefinitions="Auto, 0.7*, Auto, Auto, Auto, *" Background="#eae0d5">
         <TextBlock FontSize="50" Grid.Row="0" HorizontalAlignment="Center" Margin="0, 30, 0, 0">CARİ PROJE</TextBlock>
         <Button Grid.Row="2" Command="{Binding GoToAccountPage}">CARİ EKRANI</Button>
-        <Button Grid.Row="3">HAREKET OLUŞTURMA EKRANI</Button>
+        <Button Grid.Row="3" Command="{Binding GoToMovementPage}">HAREKET OLUŞTURMA EKRANI</Button>
         <Button Grid.Row="4">RAPOR EKRANI</Button> 
     </Grid>
+    
 </UserControl>

@@ -8,6 +8,7 @@ using CariProjesi.Data;
 using CariProjesi.Models;
 using CariProjesi.Services;
 
+
 namespace CariProje.Views;
 
 public partial class AccountPageView : UserControl
@@ -20,7 +21,7 @@ public partial class AccountPageView : UserControl
         _accountService = new AccountService(accountRepository);
 
         InitializeComponent();
-
+        Find(null, null);
     }
 
 
@@ -39,10 +40,12 @@ public partial class AccountPageView : UserControl
             account.AccountPhone = AccountPhoneNumberTextBox.Text;
             account.AccountEmail = AccountEmailTextBox.Text;
             await _accountService.UpdateAsync(account);
+            Find(null, null);
+            return;
         }
         else
         {
-            
+
             var newAccount = new Account
             {
                 AccountCode = AccountCodeTextBox.Text,
@@ -57,6 +60,8 @@ public partial class AccountPageView : UserControl
             };
 
             await _accountService.AddAsync(newAccount);
+            Find(null, null);
+
         }
 
     }
@@ -72,12 +77,13 @@ public partial class AccountPageView : UserControl
         AccountNationTextBox.Clear();
         AccountPhoneNumberTextBox.Clear();
         AccountEmailTextBox.Clear();
+        Find(null, null);
     }
 
     private async void Delete(object? sender, RoutedEventArgs e)
     {
         await _accountService.DeleteAsync(AccountCodeTextBox.Text);
-
+        Find(null, null);
     }
 
     private async void Find(object? sender, RoutedEventArgs e)
@@ -100,7 +106,7 @@ public partial class AccountPageView : UserControl
         }
     }
 
-    private async void Fill(object? sender, RoutedEventArgs e)
+    private void Fill(object? sender, RoutedEventArgs e)
     {
         var selectedItem = (Account)AccountsList.SelectedItem;
         if (selectedItem == null) return;

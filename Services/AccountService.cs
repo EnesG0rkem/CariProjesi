@@ -10,7 +10,7 @@ namespace CariProjesi.Services
 {
     public class AccountService : IService<Account>
     {
-        private readonly GenericRepository <Account> _accountRepository;
+        private readonly GenericRepository<Account> _accountRepository;
 
         public AccountService(GenericRepository<Account> accountRepsoitory)
         {

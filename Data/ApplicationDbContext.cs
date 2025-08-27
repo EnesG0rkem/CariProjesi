@@ -6,13 +6,13 @@ namespace CariProjesi.Data
     public class ApplicationDbContext : DbContext
     {
         DbSet<Account> Accounts { get; set; }
-        DbSet<AccountMovement> AccountMovements { get; set; }
+        DbSet<Movement> Movements { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // Use absolute path to ensure runtime and tooling use the same database file
-            optionsBuilder.UseSqlite("Data Source=/Users/enesgorkem/Staj/CariProjesi/CariProjesi.db");
+            optionsBuilder.UseSqlite("Data Source=/Users/enesgorkem/Staj/CariProje/CariProje.db");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,10 +21,10 @@ namespace CariProjesi.Data
             modelBuilder.Entity<Account>()
                 .HasKey(a => a.AccountCode);
 
-            modelBuilder.Entity<AccountMovement>()
-                .HasKey(am => am.AccoutMovementId);
+            modelBuilder.Entity<Movement>()
+                .HasKey(am => am.MovementId);
 
-            modelBuilder.Entity<AccountMovement>()
+            modelBuilder.Entity<Movement>()
                 .HasOne<Account>()
                 .WithMany()
                 .HasForeignKey(am => am.AccountCode);

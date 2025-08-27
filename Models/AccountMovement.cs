@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace CariProjesi.Models
 {
-    public class AccountMovement : BaseEntity
+    public class Movement : BaseEntity
     {
-        public Guid AccoutMovementId { get; set; }
         public string? AccountCode { get; set; }
+        public Guid MovementId { get; set; }
         public DateTime MovementDate { get; set; }
         public string? MovementDescription { get; set; }
-        public decimal MovementDebit { get; set; }
-        public decimal MovementCredit { get; set; }
+        public bool MovementType { get; set; }
+        public decimal MovementChange { get; set; }
     }
 }

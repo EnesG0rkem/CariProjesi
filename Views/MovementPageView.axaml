@@ -1,0 +1,87 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:CariProje.ViewModels"
+        xmlns:m="using:CariProjesi.Models"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="CariProje.Views.MovementPageView"
+        x:DataType="vm:MovementPageViewModel">
+
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="Margin" Value="10"/>
+
+        </Style>
+
+    </UserControl.Styles>
+
+    <Design.DataContext>
+        <vm:MovementPageViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto, Auto" Background="rgba(122, 122, 122, 1)">
+
+        <!-- Buttons -->
+        <Grid Row="0" ColumnDefinitions="Auto, Auto, *, Auto">
+            <Button Grid.Column="0" Content="KAYDET" Click="OnClickSave"/>
+            <Button Grid.Column="1" Content="TEMİZLE" Click="Clear"/>
+            <Button Grid.Column="3" Content="ANA MENÜ" Command="{Binding GoToHomePage}"/>
+        </Grid>
+
+        <!-- Movement form -->
+        <Grid Grid.Row="1" RowDefinitions="3*, 3*, 4*, 3*, 3*">
+            <StackPanel Grid.Row="0">
+
+                <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
+
+                    <TextBlock Text="Cari Kod" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <TextBox Name="AccountCodeTextBox" Width="150" TextChanged="AccountNameTextBox_OnTextChanged"/>
+                    
+                    <TextBlock Text="Cari Ad" Margin="50,0,10,0" VerticalAlignment="Center"/>
+                    <TextBox Name="AccountNameTextBox" Width="300" IsReadOnly="True" 
+                        IsHitTestVisible="False" 
+/>
+
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
+
+                    <TextBlock Text="Tarih" Margin="50,0,10,0" VerticalAlignment="Center"/>
+                    <DatePicker Name="MovementDatePicker"/>
+
+                    <TextBlock Text="Saat" Margin="50,0,10,0" VerticalAlignment="Center"/>
+                    <TimePicker Name="MovementTimePicker"/>
+
+                </StackPanel>
+            </StackPanel>    
+
+            <Grid Grid.Row="1">
+                <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
+
+                    <TextBlock Text="Açıklama" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <TextBox Name="MovementDescriptionTextBox" Width="774"/>
+
+                </StackPanel>
+            </Grid> 
+
+            <Grid Grid.Row="2">
+                <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
+
+                    <TextBlock Text="Tutar" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <TextBox Name="MovementAmountTextBox" Width="150"/>
+
+                    <TextBlock Text="Tür" Margin="50,0,10,0" VerticalAlignment="Center"/>
+                    <ComboBox Name="MovementTypeComboBox" Width="175">
+                        <ComboBoxItem Content="Borç"/>
+                        <ComboBoxItem Content="Alacak"/>
+                    </ComboBox>
+                    
+                </StackPanel>   
+            </Grid>
+        </Grid>
+    </Grid>
+    
+        
+</UserControl>
+

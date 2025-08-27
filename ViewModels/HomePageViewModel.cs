@@ -19,5 +19,9 @@ public partial class HomePageViewModel : ViewModelBase
         _mainWindow.CurrentPage = _mainWindow.AccountPage;
     }
 
-    
+    [RelayCommand]
+    public void GoToMovementPage()
+    {
+        _mainWindow.CurrentPage = _mainWindow.MovementPage;
+    }
 }

@@ -8,22 +8,29 @@
         x:Class="CariProje.Views.AccountPageView"
         x:DataType="vm:AccountPageViewModel">
 
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="Margin" Value="10"/>
+
+        </Style>
+
+    </UserControl.Styles>
 
     <Design.DataContext>
         <vm:AccountPageViewModel/>
     </Design.DataContext>
 
-    <Grid RowDefinitions="Auto, Auto, *" Background="#7a7a7a">
+    <Grid RowDefinitions="Auto, Auto, *" Background="rgba(122, 122, 122, 1)">
 
         <!-- Buttons -->
         <Grid Row="0" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, *, Auto, Auto, Auto">
-            <Button Grid.Column="0" Margin="10" Content="BUL" Click="Find"/>
-            <Button Grid.Column="2" Margin="10" Content="CARİ SİL" Click="Delete"/>
-            <Button Grid.Column="3" Margin="10" Content="KAYDET" Click="OnClickSave"/>
-            <Button Grid.Column="4" Margin="10" Content="TEMİZLE" Click="Clear"/>
-            <Button Grid.Column="6" Margin="10" Content="HAREKET EKLE"/>
-            <Button Grid.Column="7" Margin="10" Content="RAPORU GÖRÜNTÜLE"/>
-            <Button Grid.Column="8" Margin="10" Content="ANA MENÜ" Command="{Binding GoToHomePage}"/>
+            <Button Grid.Column="0" Content="BUL" Click="Find"/>
+            <Button Grid.Column="2" Content="CARİ SİL" Click="Delete"/>
+            <Button Grid.Column="3" Content="KAYDET" Click="OnClickSave"/>
+            <Button Grid.Column="4" Content="TEMİZLE" Click="Clear"/>
+            <Button Grid.Column="6" Content="HAREKET EKLE"/>
+            <Button Grid.Column="7" Content="RAPORU GÖRÜNTÜLE"/>
+            <Button Grid.Column="8" Content="ANA MENÜ" Command="{Binding GoToHomePage}"/>
         </Grid>
 
         <!-- Account form and search results -->
