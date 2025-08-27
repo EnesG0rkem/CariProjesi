@@ -32,7 +32,7 @@
         <TextBlock FontSize="50" Grid.Row="0" HorizontalAlignment="Center" Margin="0, 30, 0, 0">CARİ PROJE</TextBlock>
         <Button Grid.Row="2" Command="{Binding GoToAccountPage}">CARİ EKRANI</Button>
         <Button Grid.Row="3" Command="{Binding GoToMovementPage}">HAREKET OLUŞTURMA EKRANI</Button>
-        <Button Grid.Row="4">RAPOR EKRANI</Button> 
+        <Button Grid.Row="4" Command="{Binding GoToMovementReportPage}">RAPOR EKRANI</Button> 
     </Grid>
     
 </UserControl>

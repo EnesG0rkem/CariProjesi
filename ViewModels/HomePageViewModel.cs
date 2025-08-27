@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-using CariProjesi.Models;
 using CommunityToolkit.Mvvm.Input;
 
 namespace CariProje.ViewModels;
@@ -23,5 +21,11 @@ public partial class HomePageViewModel : ViewModelBase
     public void GoToMovementPage()
     {
         _mainWindow.CurrentPage = _mainWindow.MovementPage;
+    }
+
+    [RelayCommand]
+    public void GoToMovementReportPage()
+    {
+        _mainWindow.CurrentPage = _mainWindow.MovementReportPage;
     }
 }
