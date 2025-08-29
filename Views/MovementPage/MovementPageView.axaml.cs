@@ -11,11 +11,13 @@ namespace CariProje.Views
     public partial class MovementPageView : UserControl
     {
         private readonly MovementService _movementService;
+        private readonly GenericRepository<Account> _accountRepository;
         public MovementPageView()
         {
             var dbContext = new ApplicationDbContext();
             var movementRepository = new GenericRepository<Movement>(dbContext);
             var accountRepsoitory = new GenericRepository<Account>(dbContext);
+            _accountRepository = accountRepsoitory;
             _movementService = new MovementService(movementRepository, accountRepsoitory);
 
             InitializeComponent();
@@ -39,9 +41,11 @@ namespace CariProje.Views
 
             DateTime dateTime = date.ToDateTime(time);
 
+            var account = await _accountRepository.GetByIdAsync(AccountCodeTextBox.Text);
             var newMovement = new Movement
             {
                 AccountCode = AccountCodeTextBox.Text,
+                AccountName = account.AccountName + account.AccountSurname,
                 MovementId = Guid.NewGuid(),
                 MovementDate = dateTime,
                 MovementDescription = MovementDescriptionTextBox.Text,

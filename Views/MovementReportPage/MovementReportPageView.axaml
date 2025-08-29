@@ -1,16 +1,107 @@
     <UserControl xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:vm="using:CariProje.ViewModels"
+            xmlns:m="using:CariProje.Models"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
             x:Class="CariProje.Views.MovementReportPageView"
             x:DataType="vm:MovementReportPageViewModel">
 
-        <Grid>
+        <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="Margin" Value="10"/>
 
-            <TextBlock Text="Movement Report Page" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+        </Style>
+
+    </UserControl.Styles>
+
+    <Design.DataContext>
+        <vm:MovementPageViewModel/>
+    </Design.DataContext>
+
+    <Grid RowDefinitions="Auto, Auto, *, Auto, Auto" Background="rgba(122, 122, 122, 1)">
+
+        <!-- Buttons -->
+        <Button Grid.Row="0" Content="CARİ ARA" HorizontalAlignment="Left"/>
+        <Button Grid.Row="0" Content="ANA MENÜ" HorizontalAlignment="Right" Command="{Binding GoToHomePage}"/>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal" Margin="10" >
+            <TextBlock Text="Cari Kodu" VerticalAlignment="Center"/>
+            <TextBox Width="150" Margin="10,0,0,0" Text="{Binding AccountCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <!-- Movement Report form -->
+        <Border Grid.Row="2" Margin="10" Padding="10" Background="rgba(43, 43, 43, 1)" CornerRadius="5">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, *, *, *, *, *, *">
+                    <TextBlock FontSize="20" Grid.Row="0" Grid.Column="0" Text="Cari Kodu" HorizontalAlignment="Center" VerticalAlignment="Center"/> 
+                    <TextBlock FontSize="20" Grid.Row="0" Grid.Column="1" Text="Cari Adı" HorizontalAlignment="Center" VerticalAlignment="Center"/>    
+                    <TextBlock FontSize="20" Grid.Row="0" Grid.Column="2" Text="Hareket Tarihi" HorizontalAlignment="Center" VerticalAlignment="Center"/>    
+                    <TextBlock FontSize="20" Grid.Row="0" Grid.Column="3" Text="Açıklama" HorizontalAlignment="Center" VerticalAlignment="Center"/>    
+                    <TextBlock FontSize="20" Grid.Row="0" Grid.Column="4" Text="Borç" HorizontalAlignment="Center" VerticalAlignment="Center"/>    
+                    <TextBlock FontSize="20" Grid.Row="0" Grid.Column="5" Text="Alacak" HorizontalAlignment="Center" VerticalAlignment="Center"/>    
+                    <TextBlock FontSize="20" Grid.Row="0" Grid.Column="6" Text="Ara Toplam" HorizontalAlignment="Center" VerticalAlignment="Center"/>    
+                    <ListBox Name="MovementsList" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="7" ItemsSource="{Binding Movements}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="m:MovementRow">
+                                <Grid ColumnDefinitions="*, *, *, *, *, *, *" Margin="6">
+                                    <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Movement.AccountCode}"/>
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Movement.AccountName}"/>
+                                    <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Movement.MovementDate}"/>
+                                    <TextBlock Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Movement.MovementDescription}"/>
+                                    <TextBlock Grid.Column="4" HorizontalAlignment="Right" Text="{Binding Movement, Converter={StaticResource DebtCreditConverter}, ConverterParameter=Debt}"/>
+                                    <TextBlock Grid.Column="5" HorizontalAlignment="Right" Text="{Binding Movement, Converter={StaticResource DebtCreditConverter}, ConverterParameter=Credit}"/>
+                                    <TextBlock Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding RunningTotal, StringFormat={}{0:C}}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+
+
+
+
+
+
+        <!-- Summary Section -->
+        <Grid Grid.Row="3" ColumnDefinitions="Auto, *, Auto, *, Auto, *, Auto">
             
+            <Border BorderBrush="White" Background="rgba(84, 84, 84, 1)" BorderThickness="0.5" CornerRadius="5" Grid.Column="0" Padding="5" HorizontalAlignment="Left" Margin="10">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Toplam Hareket:" FontWeight="Bold" Margin="5"/>
+                    <TextBlock Text="{Binding MovementCount}" Margin="5"/>
+                </StackPanel>
+            </Border> 
+
+            <Border BorderBrush="White" Background="rgba(84, 84, 84, 1)" BorderThickness="0.5" CornerRadius="5" Grid.Column="4" Padding="5" HorizontalAlignment="Center" Margin="10">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Toplam Alacak:" FontWeight="Bold" Margin="5"/>
+                    <TextBlock Text="{Binding CreditTotal}" Margin="5"/>
+                </StackPanel>
+            </Border>   
+            
+            <Border BorderBrush="White" Background="rgba(84, 84, 84, 1)" BorderThickness="0.5" CornerRadius="5" Grid.Column="2" Padding="5" HorizontalAlignment="Center" Margin="10">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Toplam Borç:" FontWeight="Bold" Margin="5"/>
+                    <TextBlock Text="{Binding DebtTotal}" Margin="5"/>
+                </StackPanel>
+            </Border>    
+
+            <Border BorderBrush="White" Background="rgba(84, 84, 84, 1)" BorderThickness="0.5" CornerRadius="5" Grid.Column="6" Padding="5" HorizontalAlignment="Right" Margin="10">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Genel Toplam:" FontWeight="Bold" Margin="5"/>
+                    <TextBlock Text="{Binding Balance}" Margin="5"/>  
+                </StackPanel>
+            </Border>    
+
         </Grid>
+
+
+        <Grid Grid.Row="4" Height="5"/>
+        
+    </Grid>
     
 </UserControl>

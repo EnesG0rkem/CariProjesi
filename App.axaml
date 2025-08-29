@@ -8,7 +8,11 @@
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
-  
+    
+    <Application.Resources>
+        <local:DebtCreditConverter x:Key="DebtCreditConverter"/>
+    </Application.Resources>
+    
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>
