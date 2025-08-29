@@ -42,6 +42,12 @@ namespace CariProjesi.Services
             return await _accountRepository.GetByIdAsync(id);
         }
 
+        public async Task<Account> GetByFullNameAsync(string firstName, string surname)
+        {
+            return (await _accountRepository.GetAllAsync()).Where(x =>
+            x.AccountName.Equals(firstName) && x.AccountSurname.Equals(surname)).FirstOrDefault();
+        }
+
         public async Task UpdateAsync(Account entity)
         {
             await _accountRepository.UpdateAsync(entity);

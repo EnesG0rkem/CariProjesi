@@ -24,10 +24,10 @@
 
         <!-- Buttons -->
         <Grid Row="0" ColumnDefinitions="Auto, Auto, Auto, Auto, Auto, *, Auto, Auto, Auto">
-            <Button Grid.Column="0" Content="BUL" Click="Find"/>
-            <Button Grid.Column="2" Content="CARİ SİL" Click="Delete"/>
-            <Button Grid.Column="3" Content="KAYDET" Click="OnClickSave"/>
-            <Button Grid.Column="4" Content="TEMİZLE" Click="Clear"/>
+            <Button Grid.Column="0" Content="BUL" Command="{Binding Find}"/>
+            <Button Grid.Column="2" Content="CARİ SİL" Command="{Binding Delete}"/>
+            <Button Grid.Column="3" Content="KAYDET" Command="{Binding Save}"/>
+            <Button Grid.Column="4" Content="TEMİZLE" Command="{Binding Clear}"/>
             <Button Grid.Column="6" Content="HAREKET EKLE"/>
             <Button Grid.Column="7" Content="RAPORU GÖRÜNTÜLE"/>
             <Button Grid.Column="8" Content="ANA MENÜ" Command="{Binding GoToHomePage}"/>
@@ -42,13 +42,13 @@
                     <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
 
                         <TextBlock Text="Cari Kod" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                        <TextBox Name="AccountCodeTextBox" Width="150"/>
+                        <TextBox Text="{Binding AccountCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150"/>
 
                         <TextBlock Text="Cari Adı" Margin="50,0,10,0" VerticalAlignment="Center"/>
-                        <TextBox Name="AccountNameTextBox" Width="225"/>
+                        <TextBox Text="{Binding AccountName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="225"/>
 
                         <TextBlock Text="Cari Soyadı" Margin="50,0,10,0" VerticalAlignment="Center"/>
-                        <TextBox Name="AccountSurnameTextBox" Width="175"/>
+                        <TextBox Text="{Binding AccountSurname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="175"/>
 
                     </StackPanel>
                 </Grid>    
@@ -57,7 +57,7 @@
                     <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
 
                         <TextBlock Text="Cari E-Posta" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                        <TextBox Name="AccountEmailTextBox" Width="774"/>
+                        <TextBox Text="{Binding AccountEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="774"/>
 
                     </StackPanel>
                 </Grid> 
@@ -66,7 +66,7 @@
                     <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
 
                         <TextBlock Text="Cari Adres" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                        <TextBox Name="AccountAddressTextBox" Width="784" Height="60"/>
+                        <TextBox Text="{Binding AccountAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="784" Height="60"/>
                         
                     </StackPanel>
                 </Grid> 
@@ -75,13 +75,13 @@
                     <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
 
                         <TextBlock Text="Cari Ülkesi" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                        <TextBox Name="AccountNationTextBox" Width="150"/>
+                        <TextBox Text="{Binding AccountCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="150"/>
 
                         <TextBlock Text="Cari Şehir" Margin="41,0,10,0" VerticalAlignment="Center"/>
-                        <TextBox Name="AccountCityTextBox" Width="225"/>
+                        <TextBox Text="{Binding AccountCity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="225"/>
 
                         <TextBlock Text="Cari İlçesi" Margin="41,0,10,0" VerticalAlignment="Center"/>
-                        <TextBox Name="AccountDistrictTextBox" Width="175"/>
+                        <TextBox Text="{Binding AccountDistrict, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="175"/>
 
                     </StackPanel>
                 </Grid> 
@@ -90,7 +90,7 @@
                     <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
 
                         <TextBlock Text="Cari Telefon Numarası" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                        <TextBox Name="AccountPhoneNumberTextBox" Width="300"/>
+                        <TextBox Text="{Binding AccountPhone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300"/>
                         
                     </StackPanel>
                 </Grid> 
@@ -104,7 +104,9 @@
                         <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, *" >
                             <TextBlock FontSize="20" Grid.Row="0" Grid.Column="0" Text="Cari Kodu" HorizontalAlignment="Center" VerticalAlignment="Center"/> 
                             <TextBlock FontSize="20" Grid.Row="0" Grid.Column="1" Text="Cari Adı" HorizontalAlignment="Center" VerticalAlignment="Center"/>    
-                            <ListBox Name="AccountsList" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" SelectionChanged="Fill">
+                            <ListBox ItemsSource="{Binding Accounts}"
+                                     SelectedItem="{Binding SelectedAccount, Mode=TwoWay}"
+                                     Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate x:DataType="m:Account" >
                                         <Grid ColumnDefinitions="*, *" Margin="6">
@@ -121,6 +123,10 @@
             <!-- Blank space -->
             <Grid Grid.Column="2" Width="10"/>
         </Grid>
+
+        <!-- Dialog -->
+        
+
     </Grid>
 
 </UserControl>
