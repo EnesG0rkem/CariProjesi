@@ -54,6 +54,20 @@ public partial class AccountPageViewModel : ViewModelBase
         _mainWindow.CurrentPage = _mainWindow.HomePage;
     }
 
+    [RelayCommand]
+    public void GoToMovementPage()
+    {
+        _mainWindow.CurrentPage = _mainWindow.MovementPage;
+        _mainWindow.MovementPage.SetAccountCode(AccountCode);
+    }
+
+    [RelayCommand]
+    public void GoToReportPage()
+    {
+        _mainWindow.CurrentPage = _mainWindow.MovementReportPage;
+        _mainWindow.MovementReportPage.SetAccountCode(AccountCode);
+    }
+    
     partial void OnSelectedAccountChanged(Account value)
     {
         if (value == null)

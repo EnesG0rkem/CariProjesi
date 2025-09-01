@@ -14,10 +14,34 @@ namespace CariProje.ViewModels
     {
         private readonly MainWindowViewModel _mainWindow;
         public ObservableCollection<MovementRow> Movements { get; } = new();
-        public int MovementCount { get; set; } = 0;
-        public decimal CreditTotal { get; set; } = 0;
-        public decimal DebtTotal { get; set; } = 0;
-        public decimal Balance { get; set; } = 0;
+
+        private int _movementCount = 0;
+        public int MovementCount
+        {
+            get => _movementCount;
+            set => SetProperty(ref _movementCount, value);
+        }
+
+        private decimal _creditTotal = 0;
+        public decimal CreditTotal
+        {
+            get => _creditTotal;
+            set => SetProperty(ref _creditTotal, value);
+        }
+
+        private decimal _debtTotal = 0;
+        public decimal DebtTotal
+        {
+            get => _debtTotal;
+            set => SetProperty(ref _debtTotal, value);
+        }
+
+        private decimal _balance = 0;
+        public decimal Balance
+        {
+            get => _balance;
+            set => SetProperty(ref _balance, value);
+        }
 
         private readonly MovementService _movementService;
         private string? _accountCode;
@@ -46,10 +70,20 @@ namespace CariProje.ViewModels
         }
 
         [RelayCommand]
+        public void GoToAccountPage()
+        {
+            _mainWindow.CurrentPage = _mainWindow.AccountPage;
+        }
+
+
+        [RelayCommand]
         public async Task Find(string? accountCode)
         {
             Movements.Clear();
-
+            CreditTotal = 0;
+            DebtTotal = 0;
+            Balance = 0;
+            MovementCount = 0;
             IEnumerable<Movement> movements;
             if (string.IsNullOrEmpty(accountCode))
             {
@@ -77,8 +111,20 @@ namespace CariProje.ViewModels
                 Movements.Add(new MovementRow(movement, runningTotal));
             }
             Balance = CreditTotal - DebtTotal;
+            MovementCount = 0;
             MovementCount = Movements.Count;
         }
-        
+
+        [RelayCommand]
+        public void Clear()
+        {
+            AccountCode = "";
+        }
+
+        [RelayCommand]
+        public void SetAccountCode(string accountCode)
+        {
+            AccountCode = accountCode;
+        }
     }
 }

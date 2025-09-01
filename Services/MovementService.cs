@@ -8,7 +8,7 @@ using CariProjesi.Models;
 
 namespace CariProjesi.Services
 {
-    public class MovementService : IService<Movement>
+    public class MovementService : IMovementService
     {
         private readonly GenericRepository<Movement> _movementRepository;
         private readonly GenericRepository<Account> _accountRepository;
@@ -51,7 +51,7 @@ namespace CariProjesi.Services
             return _movementRepository.Where(predicate);
         }
 
-        public async Task<string> FindAccountNameAsync(string accountCode)
+        public async Task<string?> FindAccountNameAsync(string accountCode)
         {
             var account = await _accountRepository.GetByIdAsync(accountCode);
             if (account == null) return null;

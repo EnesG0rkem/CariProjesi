@@ -28,8 +28,8 @@
             <Button Grid.Column="2" Content="CARİ SİL" Command="{Binding Delete}"/>
             <Button Grid.Column="3" Content="KAYDET" Command="{Binding Save}"/>
             <Button Grid.Column="4" Content="TEMİZLE" Command="{Binding Clear}"/>
-            <Button Grid.Column="6" Content="HAREKET EKLE"/>
-            <Button Grid.Column="7" Content="RAPORU GÖRÜNTÜLE"/>
+            <Button Grid.Column="6" Content="HAREKET EKLE" Command="{Binding GoToMovementPage}"/>
+            <Button Grid.Column="7" Content="RAPORU GÖRÜNTÜLE" Command="{Binding GoToReportPage}"/>
             <Button Grid.Column="8" Content="ANA MENÜ" Command="{Binding GoToHomePage}"/>
         </Grid>
 
@@ -57,7 +57,10 @@
                     <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
 
                         <TextBlock Text="Cari E-Posta" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding AccountEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="774"/>
+                        <TextBox Text="{Binding AccountEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="350"/>
+
+                        <TextBlock Text="Cari Telefon Numarası" Margin="50,0,10,0" VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding AccountPhone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="210"/>
 
                     </StackPanel>
                 </Grid> 
@@ -86,14 +89,7 @@
                     </StackPanel>
                 </Grid> 
 
-                <Grid Grid.Row="4">
-                    <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center">
-
-                        <TextBlock Text="Cari Telefon Numarası" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                        <TextBox Text="{Binding AccountPhone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300"/>
-                        
-                    </StackPanel>
-                </Grid> 
+                
             </Grid>
         
             <!-- Search results -->
@@ -125,6 +121,7 @@
         </Grid>
 
         <!-- Dialog -->
+        
         
 
     </Grid>
