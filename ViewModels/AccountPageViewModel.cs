@@ -36,6 +36,7 @@ public partial class AccountPageViewModel : ViewModelBase
         dialog.CloseText = "Tamam";
         CurrentDialog = dialog;
         await dialog.WaitAsync();
+        CurrentDialog = null;
 
     }
 
