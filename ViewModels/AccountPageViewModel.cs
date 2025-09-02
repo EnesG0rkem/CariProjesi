@@ -6,6 +6,8 @@ using CariProjesi.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CariProjesi.Services;
 using CariProjesi.Data;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using System;
 
 namespace CariProje.ViewModels;
 
@@ -130,6 +132,15 @@ public partial class AccountPageViewModel : ViewModelBase
             return;
         }
 
+        try
+        {
+            int.Parse(phone);
+        }
+        catch (Exception e)
+        {
+            return;
+        }
+
         var existing = await _accountService.GetByIdAsync(code);
         if (existing != null)
         {
@@ -170,6 +181,7 @@ public partial class AccountPageViewModel : ViewModelBase
         if (string.IsNullOrWhiteSpace(AccountCode))
             return;
 
+        
         await _accountService.DeleteAsync(AccountCode);
         await Find();
     }
