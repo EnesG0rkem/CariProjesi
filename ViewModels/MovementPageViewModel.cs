@@ -141,10 +141,7 @@ public partial class MovementPageViewModel : ViewModelBase
     [RelayCommand]
     private async Task SaveMovementAsync()
     {
-        try
-        {
-            IsSaving = true;
-
+     
             if (string.IsNullOrWhiteSpace(AccountCode))
             {
                 // TODO: Show validation message
@@ -189,20 +186,9 @@ public partial class MovementPageViewModel : ViewModelBase
             };
 
             await _movementService.AddAsync(newMovement);
-            
-            // Clear form after successful save
-            ClearForm();
-        }
-        catch (Exception ex)
-        {
-            // TODO: Handle error properly (show error dialog)
-            Console.WriteLine($"Error saving movement: {ex.Message}");
-        }
-        finally
-        {
-            IsSaving = false;
-        }
     }
+
+    
 
     [RelayCommand]
     private void ClearForm()
