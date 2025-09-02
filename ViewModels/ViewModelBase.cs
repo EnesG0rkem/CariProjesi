@@ -2,6 +2,9 @@
 
 namespace CariProje.ViewModels;
 
-public class ViewModelBase : ObservableObject
+public partial class ViewModelBase : ObservableObject
 {
+       // Dialog overlay
+    [ObservableProperty]
+    private DialogViewModel? _currentDialog;
 }

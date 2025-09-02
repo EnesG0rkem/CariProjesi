@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using CariProje.ViewModels;
 
-namespace CariProje.Views.Dialogs.MessageDialogView
+namespace CariProje.Views.Dialogs
 {
     public partial class MessageDialogView : UserControl
     {

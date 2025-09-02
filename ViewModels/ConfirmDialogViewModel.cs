@@ -9,24 +9,22 @@ namespace CariProje.ViewModels
 {
     public partial class ConfirmDialogViewModel : DialogViewModel
     {
+        public ConfirmDialogViewModel(){}
 
         [ObservableProperty] private string _title = "Onayla";
         [ObservableProperty] private string _message = "Emin misiniz?";
         [ObservableProperty] private string _confirmText = "Evet";
-        [ObservableProperty] private string _cancelText  = "Hayır";
+        [ObservableProperty] private string _cancelText = "Hayır";
 
-
-
-        
         [RelayCommand]
-        public void Confirm()
+        public async Task Confirm()
         {
             Confirmed = true;
             Close();
         }
 
         [RelayCommand]
-        public void Cancel()
+        public async Task Cancel()
         {
             Confirmed = false;
             Close();

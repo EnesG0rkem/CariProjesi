@@ -8,32 +8,28 @@ namespace CariProje.ViewModels
 {
     public partial class DialogViewModel : ViewModelBase
     {
-        [ObservableProperty]
-        private bool _isDialogOpen;
+
+        public DialogViewModel()
+        {
+        }
 
         [ObservableProperty]
         private bool _confirmed;
+
         protected TaskCompletionSource closeTask = new TaskCompletionSource();
 
-        public async Task WaitAsync()
-        {
-            await closeTask.Task;
-        }
+        public async Task WaitAsync() => await closeTask.Task;
+
         public void Show()
         {
             if (closeTask.Task.IsCompleted)
                 closeTask = new TaskCompletionSource();
-
-            IsDialogOpen = true;
         }
 
         public void Close()
         {
-            IsDialogOpen = false;
             closeTask.TrySetResult();
         }
-        
-        
     }
 
 }

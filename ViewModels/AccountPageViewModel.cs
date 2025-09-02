@@ -6,7 +6,6 @@ using CariProjesi.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CariProjesi.Services;
 using CariProjesi.Data;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System;
 
 namespace CariProje.ViewModels;
@@ -16,11 +15,7 @@ public partial class AccountPageViewModel : ViewModelBase
     private readonly MainWindowViewModel _mainWindow;
     private readonly AccountService _accountService;
 
-    // Dialog overlay
-    [ObservableProperty]
-    private DialogViewModel? _currentDialog;
-
-    private void ShowConfirmationDialog(string title, string message)
+    private async Task<bool> ShowConfirmationDialog(string title, string message)
     {
         var dialog = new ConfirmDialogViewModel();
         dialog.Title = title;
@@ -28,15 +23,20 @@ public partial class AccountPageViewModel : ViewModelBase
         dialog.ConfirmText = "Evet";
         dialog.CancelText = "Kapat";
         CurrentDialog = dialog;
-    }
 
-    private void ShowMessageDialog(string title, string message)
+        await dialog.WaitAsync();
+        CurrentDialog = null;
+        return dialog.Confirmed;
+    }
+    private async Task ShowMessageDialog(string title, string message)
     {
         var dialog = new MessageDialogViewModel();
         dialog.Title = title;
         dialog.Message = message;
         dialog.CloseText = "Tamam";
         CurrentDialog = dialog;
+        await dialog.WaitAsync();
+
     }
 
     // Form fields
@@ -148,7 +148,7 @@ public partial class AccountPageViewModel : ViewModelBase
             string.IsNullOrWhiteSpace(country) || string.IsNullOrWhiteSpace(phone) ||
             string.IsNullOrWhiteSpace(email))
         {
-            ShowMessageDialog("Hata", "Lütfen tüm alanları doldurunuz.");
+            await ShowMessageDialog("Hata", "Lütfen tüm alanları doldurunuz.");
             return;
         }
 
@@ -158,7 +158,7 @@ public partial class AccountPageViewModel : ViewModelBase
         }
         catch (Exception)
         {
-            ShowMessageDialog("Hata", "Telefon numarası geçerli bir sayı olmalıdır.");
+            await ShowMessageDialog("Hata", "Telefon numarası geçerli bir sayı olmalıdır.");
             return;
         }
 
@@ -175,11 +175,11 @@ public partial class AccountPageViewModel : ViewModelBase
             existing.AccountPhone = phone;
             existing.AccountEmail = email;
 
-            ShowConfirmationDialog("Emin misiniz?", "Cari verilerini güncellemek istiyor musunuz?");
-            if (!CurrentDialog.Confirmed) return;
-
+            var result = await ShowConfirmationDialog("Emin misiniz?", "Cari verilerini güncellemek istiyor musunuz?");
+            if (!result) return;
+            
             await _accountService.UpdateAsync(existing);
-            ShowMessageDialog("Başarılı", "Cari başarıyla güncellendi.");
+            await ShowMessageDialog("Başarılı", "Cari başarıyla güncellendi.");
         }
         else
         {
@@ -196,7 +196,7 @@ public partial class AccountPageViewModel : ViewModelBase
                 AccountEmail = email,
             };
             await _accountService.AddAsync(newAccount);
-            ShowMessageDialog("Başarılı", "Yeni cari başarıyla eklendi.");
+            await ShowMessageDialog("Başarılı", "Yeni cari başarıyla eklendi.");
         }
 
         await Find();
@@ -207,26 +207,23 @@ public partial class AccountPageViewModel : ViewModelBase
     {
         if (string.IsNullOrWhiteSpace(AccountCode))
         {
-            ShowMessageDialog("Hata", "Silinecek cari seçilmedi.");
+            await ShowMessageDialog("Hata", "Silinecek cari seçilmedi.");
             return;
         }
 
         var account = await _accountService.GetByIdAsync(AccountCode);
         if (account == null)
         {
-            ShowMessageDialog("Hata", "Cari bulunamadı.");
+            await ShowMessageDialog("Hata", "Cari bulunamadı.");
             return;
         }
 
-        ShowConfirmationDialog("Emin misiniz?", "Cariyi silmek istediğinize emin misiniz?");
-        if (!CurrentDialog.Confirmed) return;
+        var result = await ShowConfirmationDialog("Emin misiniz?", "Cariyi silmek istediğinize emin misiniz?");
+        if (!result) return;
+        
         
         await _accountService.DeleteAsync(AccountCode);
-        CurrentDialog = new ConfirmDialogViewModel
-        {
-            Title = "Başarılı",
-            Message = "Cari başarıyla silindi."
-        };
+        await ShowMessageDialog("Başarılı!", "Cari başırılı bir şekilde silindi.");
         await Find();
     }
 

@@ -9,6 +9,7 @@ namespace CariProje.ViewModels
 {
     public partial class MessageDialogViewModel : DialogViewModel
     {
+        public MessageDialogViewModel() { }
 
         [ObservableProperty] private string _title;
         [ObservableProperty] private string _message ;

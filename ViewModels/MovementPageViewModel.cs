@@ -17,6 +17,31 @@ public partial class MovementPageViewModel : ViewModelBase
 
     #region Properties
 
+    private async Task<bool> ShowConfirmationDialog(string title, string message)
+    {
+        var dialog = new ConfirmDialogViewModel();
+        dialog.Title = title;
+        dialog.Message = message;
+        dialog.ConfirmText = "Evet";
+        dialog.CancelText = "Kapat";
+        CurrentDialog = dialog;
+
+        await dialog.WaitAsync();
+        CurrentDialog = null;
+        return dialog.Confirmed;
+    }
+    private async Task ShowMessageDialog(string title, string message)
+    {
+        var dialog = new MessageDialogViewModel();
+        dialog.Title = title;
+        dialog.Message = message;
+        dialog.CloseText = "Tamam";
+        CurrentDialog = dialog;
+
+        await dialog.WaitAsync();
+        CurrentDialog = null;
+    }
+
     private string _accountCode = string.Empty;
     public string AccountCode
     {
@@ -139,48 +164,25 @@ public partial class MovementPageViewModel : ViewModelBase
         AccountCode = accountCode;
     }
 
-    // Dialog overlay
-    [ObservableProperty]
-    private DialogViewModel? _currentDialog;
-
-    private void ShowConfirmationDialog(string title, string message)
-    {
-        var dialog = new ConfirmDialogViewModel();
-        dialog.Title = title;
-        dialog.Message = message;
-        dialog.ConfirmText = "Evet";
-        dialog.CancelText = "Hayır";
-        CurrentDialog = dialog;
-    }
-
-    private void ShowMessageDialog(string title, string message)
-    {
-        var dialog = new MessageDialogViewModel();
-        dialog.Title = title;
-        dialog.Message = message;
-        dialog.CloseText = "Tamam";
-        CurrentDialog = dialog;
-    }
-
     [RelayCommand]
     private async Task SaveMovementAsync()
     {
         if (string.IsNullOrWhiteSpace(AccountCode))
         {
-            ShowMessageDialog("Hata", "Lütfen cari kodu giriniz.");
+            await ShowMessageDialog("Hata", "Lütfen cari kodu giriniz.");
             return;
         }
 
         if (MovementAmount <= 0)
         {
-            ShowMessageDialog("Hata", "Lütfen geçerli bir tutar giriniz.");
+            await ShowMessageDialog("Hata", "Lütfen geçerli bir tutar giriniz.");
             return;
         }
 
         var account = await _accountRepository.GetByIdAsync(AccountCode);
         if (account == null)
         {
-            ShowMessageDialog("Hata", "Cari bulunamadı.");
+            await ShowMessageDialog("Hata", "Cari bulunamadı.");
             return;
         }
 
@@ -207,11 +209,11 @@ public partial class MovementPageViewModel : ViewModelBase
             MovementType = isCredit,
             MovementChange = MovementAmount
         };
-        ShowConfirmationDialog("Emin misiniz?", "Hareketi kaydetmek istediğiznize emin misiniz?");
+        await ShowConfirmationDialog("Emin misiniz?", "Hareketi kaydetmek istediğiznize emin misiniz?");
         if (!CurrentDialog.Confirmed) return;
 
         await _movementService.AddAsync(newMovement);
-        ShowMessageDialog("Başarılı", $"Hareket başarıyla kaydedildi. ({(isCredit ? "Alacak" : "Borç")})");
+        await ShowMessageDialog("Başarılı", $"Hareket başarıyla kaydedildi. ({(isCredit ? "Alacak" : "Borç")})");
     }
 
     
