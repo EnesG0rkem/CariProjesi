@@ -8,7 +8,7 @@ using CariProjesi.Models;
 
 namespace CariProjesi.Services
 {
-    public class MovementService : IMovementService
+    public class MovementService
     {
         private readonly GenericRepository<Movement> _movementRepository;
         private readonly GenericRepository<Account> _accountRepository;

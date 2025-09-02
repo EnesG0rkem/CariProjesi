@@ -11,7 +11,7 @@ namespace CariProje.ViewModels;
 public partial class MovementPageViewModel : ViewModelBase
 {
     private readonly MainWindowViewModel _mainWindow;
-    private readonly IMovementService _movementService;
+    private readonly MovementService _movementService;
     private readonly GenericRepository<Account> _accountRepository;
 
     #region Properties
@@ -88,7 +88,7 @@ public partial class MovementPageViewModel : ViewModelBase
 
     #endregion
 
-    public MovementPageViewModel(MainWindowViewModel mainWindow, IMovementService? movementService = null)
+    public MovementPageViewModel(MainWindowViewModel mainWindow, MovementService? movementService = null)
     {
         _mainWindow = mainWindow;
         
@@ -222,21 +222,9 @@ public partial class MovementPageViewModel : ViewModelBase
 
     private async Task LoadAccountNameAsync()
     {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(AccountCode))
-            {
-                AccountName = string.Empty;
-                return;
-            }
-
-            var accountName = await _movementService.FindAccountNameAsync(AccountCode);
+        var accountName = await _movementService.FindAccountNameAsync(AccountCode);
             AccountName = accountName ?? "Cari bulunamadı";
-        }
-        catch (Exception ex)
-        {
-            AccountName = "Hata: " + ex.Message;
-        }
+        
     }
 
     #endregion
