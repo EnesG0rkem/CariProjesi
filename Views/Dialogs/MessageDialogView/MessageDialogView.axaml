@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:CariProje.ViewModels"
+        x:Class="CariProje.Views.Dialogs.MessageDialogView.MessageDialogView"
+        x:DataType="vm:MessageDialogViewModel"
+        mc:Ignorable="d" Width="400" Height="300">
+
+        <Border Background="rgba(122, 122, 122, 1)" CornerRadius="12" 
+        Width="400" Height="300" 
+        Padding="15" 
+        BorderBrush="#B0B0B0" BorderThickness="1"
+        HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <Grid RowDefinitions="Auto, *, Auto" Margin="10">
+
+        <!-- Title -->
+        <TextBlock Grid.Row="0"
+                Text="{Binding Title}" 
+                FontSize="22" FontWeight="Bold" 
+                HorizontalAlignment="Center" 
+                Margin="0,5,0,15"/>
+
+        <!-- Message -->
+        <Border Grid.Row="1" Background="rgba(147, 147, 147, 1)" CornerRadius="8" Padding="10" BorderBrush="#D0D0D0" BorderThickness="1">
+                <TextBlock Text="{Binding Message}" 
+                       TextWrapping="Wrap"  
+                       FontSize="16"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"/>
+        </Border>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" 
+                HorizontalAlignment="Center" Spacing="15" Margin="0,20,0,0">
+
+                <Button Content="{Binding CloseText}" 
+                        Command="{Binding CloseDialog}" 
+                        Width="100" Height="35"
+                        Background="#4A90E2" 
+                        Foreground="White" 
+                        CornerRadius="6"/>
+                        
+        </StackPanel>
+
+    </Grid>
+</Border>
+</UserControl>

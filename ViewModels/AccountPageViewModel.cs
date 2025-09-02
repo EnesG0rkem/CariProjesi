@@ -18,7 +18,26 @@ public partial class AccountPageViewModel : ViewModelBase
 
     // Dialog overlay
     [ObservableProperty]
-    private DialogViewModel _currentDialog = new ConfirmDialogViewModel();
+    private DialogViewModel? _currentDialog;
+
+    private void ShowConfirmationDialog(string title, string message)
+    {
+        var dialog = new ConfirmDialogViewModel();
+        dialog.Title = title;
+        dialog.Message = message;
+        dialog.ConfirmText = "Evet";
+        dialog.CancelText = "Kapat";
+        CurrentDialog = dialog;
+    }
+
+    private void ShowMessageDialog(string title, string message)
+    {
+        var dialog = new MessageDialogViewModel();
+        dialog.Title = title;
+        dialog.Message = message;
+        dialog.CloseText = "Tamam";
+        CurrentDialog = dialog;
+    }
 
     // Form fields
     [ObservableProperty] private string _accountCode = string.Empty;
@@ -48,6 +67,7 @@ public partial class AccountPageViewModel : ViewModelBase
 
         // Initial load
         _ = Find();
+        _selectedAccount = null!;
     }
     
     [RelayCommand]
@@ -128,7 +148,7 @@ public partial class AccountPageViewModel : ViewModelBase
             string.IsNullOrWhiteSpace(country) || string.IsNullOrWhiteSpace(phone) ||
             string.IsNullOrWhiteSpace(email))
         {
-            // Basic inline validation; replace with a dialog if desired
+            ShowMessageDialog("Hata", "Lütfen tüm alanları doldurunuz.");
             return;
         }
 
@@ -136,8 +156,9 @@ public partial class AccountPageViewModel : ViewModelBase
         {
             int.Parse(phone);
         }
-        catch (Exception e)
+        catch (Exception)
         {
+            ShowMessageDialog("Hata", "Telefon numarası geçerli bir sayı olmalıdır.");
             return;
         }
 
@@ -153,7 +174,12 @@ public partial class AccountPageViewModel : ViewModelBase
             existing.AccountCountry = country;
             existing.AccountPhone = phone;
             existing.AccountEmail = email;
+
+            ShowConfirmationDialog("Emin misiniz?", "Cari verilerini güncellemek istiyor musunuz?");
+            if (!CurrentDialog.Confirmed) return;
+
             await _accountService.UpdateAsync(existing);
+            ShowMessageDialog("Başarılı", "Cari başarıyla güncellendi.");
         }
         else
         {
@@ -170,6 +196,7 @@ public partial class AccountPageViewModel : ViewModelBase
                 AccountEmail = email,
             };
             await _accountService.AddAsync(newAccount);
+            ShowMessageDialog("Başarılı", "Yeni cari başarıyla eklendi.");
         }
 
         await Find();
@@ -179,10 +206,27 @@ public partial class AccountPageViewModel : ViewModelBase
     public async Task Delete()
     {
         if (string.IsNullOrWhiteSpace(AccountCode))
+        {
+            ShowMessageDialog("Hata", "Silinecek cari seçilmedi.");
             return;
+        }
 
+        var account = await _accountService.GetByIdAsync(AccountCode);
+        if (account == null)
+        {
+            ShowMessageDialog("Hata", "Cari bulunamadı.");
+            return;
+        }
+
+        ShowConfirmationDialog("Emin misiniz?", "Cariyi silmek istediğinize emin misiniz?");
+        if (!CurrentDialog.Confirmed) return;
         
         await _accountService.DeleteAsync(AccountCode);
+        CurrentDialog = new ConfirmDialogViewModel
+        {
+            Title = "Başarılı",
+            Message = "Cari başarıyla silindi."
+        };
         await Find();
     }
 

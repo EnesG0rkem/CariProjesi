@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CariProjesi.Data;
 using CariProjesi.Models;
 using CariProjesi.Services;
@@ -138,54 +139,79 @@ public partial class MovementPageViewModel : ViewModelBase
         AccountCode = accountCode;
     }
 
+    // Dialog overlay
+    [ObservableProperty]
+    private DialogViewModel? _currentDialog;
+
+    private void ShowConfirmationDialog(string title, string message)
+    {
+        var dialog = new ConfirmDialogViewModel();
+        dialog.Title = title;
+        dialog.Message = message;
+        dialog.ConfirmText = "Evet";
+        dialog.CancelText = "Hayır";
+        CurrentDialog = dialog;
+    }
+
+    private void ShowMessageDialog(string title, string message)
+    {
+        var dialog = new MessageDialogViewModel();
+        dialog.Title = title;
+        dialog.Message = message;
+        dialog.CloseText = "Tamam";
+        CurrentDialog = dialog;
+    }
+
     [RelayCommand]
     private async Task SaveMovementAsync()
     {
-     
-            if (string.IsNullOrWhiteSpace(AccountCode))
-            {
-                // TODO: Show validation message
-                return;
-            }
+        if (string.IsNullOrWhiteSpace(AccountCode))
+        {
+            ShowMessageDialog("Hata", "Lütfen cari kodu giriniz.");
+            return;
+        }
 
-            if (MovementAmount <= 0)
-            {
-                // TODO: Show validation message
-                return;
-            }
+        if (MovementAmount <= 0)
+        {
+            ShowMessageDialog("Hata", "Lütfen geçerli bir tutar giriniz.");
+            return;
+        }
 
-            var account = await _accountRepository.GetByIdAsync(AccountCode);
-            if (account == null)
-            {
-                // TODO: Show error message
-                return;
-            }
+        var account = await _accountRepository.GetByIdAsync(AccountCode);
+        if (account == null)
+        {
+            ShowMessageDialog("Hata", "Cari bulunamadı.");
+            return;
+        }
 
-            bool isCredit = SelectedMovementTypeIndex == 1; // 0: Borç, 1: Alacak
-            
-            // Combine date and time properly
-            DateTime movementDateTime;
-            if (MovementDate.HasValue && MovementTime.HasValue)
-            {
-                movementDateTime = MovementDate.Value.Date.Add(MovementTime.Value);
-            }
-            else
-            {
-                movementDateTime = DateTime.Now;
-            }
+        bool isCredit = SelectedMovementTypeIndex == 1; // 0: Borç, 1: Alacak
+        
+        // Combine date and time properly
+        DateTime movementDateTime;
+        if (MovementDate.HasValue && MovementTime.HasValue)
+        {
+            movementDateTime = MovementDate.Value.Date.Add(MovementTime.Value);
+        }
+        else
+        {
+            movementDateTime = DateTime.Now;
+        }
 
-            var newMovement = new Movement
-            {
-                AccountCode = AccountCode,
-                AccountName = account.AccountName + " " + account.AccountSurname,
-                MovementId = Guid.NewGuid(),
-                MovementDate = movementDateTime,
-                MovementDescription = MovementDescription,
-                MovementType = isCredit,
-                MovementChange = MovementAmount
-            };
+        var newMovement = new Movement
+        {
+            AccountCode = AccountCode,
+            AccountName = account.AccountName + " " + account.AccountSurname,
+            MovementId = Guid.NewGuid(),
+            MovementDate = movementDateTime,
+            MovementDescription = MovementDescription,
+            MovementType = isCredit,
+            MovementChange = MovementAmount
+        };
+        ShowConfirmationDialog("Emin misiniz?", "Hareketi kaydetmek istediğiznize emin misiniz?");
+        if (!CurrentDialog.Confirmed) return;
 
-            await _movementService.AddAsync(newMovement);
+        await _movementService.AddAsync(newMovement);
+        ShowMessageDialog("Başarılı", $"Hareket başarıyla kaydedildi. ({(isCredit ? "Alacak" : "Borç")})");
     }
 
     

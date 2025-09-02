@@ -5,15 +5,13 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using CariProje.ViewModels;
 
-namespace CariProje.Views
+namespace CariProje.Views.Dialogs.MessageDialogView
 {
-    public partial class ConfirmDialogView: UserControl
+    public partial class MessageDialogView : UserControl
     {
-        public ConfirmDialogView()
+        public MessageDialogView()
         {
-
             InitializeComponent();
-        
         }
     }
 }

@@ -36,14 +36,14 @@
                 HorizontalAlignment="Center" Spacing="15" Margin="0,20,0,0">
 
                 <Button Content="{Binding CancelText}" 
-                        Command="{Binding CancelCommand}" 
+                        Command="{Binding Cancel}" 
                         Width="100" Height="35"
                         Background="rgba(255, 84, 84, 1)" 
                         Foreground="White" 
                         CornerRadius="6"/>
 
                 <Button Content="{Binding ConfirmText}" 
-                        Command="{Binding ConfirmCommand}" 
+                        Command="{Binding Confirm}" 
                         Width="100" Height="35"
                         Background="#4A90E2" 
                         Foreground="White" 

@@ -92,6 +92,17 @@
                 </StackPanel>   
             </Grid>
         </Grid>
+
+        <!-- Dialog Overlay -->
+        <ContentControl Grid.Row="0" Grid.RowSpan="2"
+                    Content="{Binding CurrentDialog}"
+                    IsVisible="{Binding CurrentDialog, Converter={x:Static ObjectConverters.IsNotNull}}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
+            <ContentControl.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </ContentControl.Background>
+        </ContentControl>
     </Grid>
 </UserControl>
 

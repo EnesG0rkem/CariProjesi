@@ -10,7 +10,10 @@ namespace CariProje.ViewModels
     {
         [ObservableProperty]
         private bool _isDialogOpen;
-        protected TaskCompletionSource closeTask = new TaskCompletionSource(); 
+
+        [ObservableProperty]
+        private bool _confirmed;
+        protected TaskCompletionSource closeTask = new TaskCompletionSource();
 
         public async Task WaitAsync()
         {
@@ -18,9 +21,9 @@ namespace CariProje.ViewModels
         }
         public void Show()
         {
-            if(closeTask.Task.IsCompleted )
-                closeTask = new TaskCompletionSource(); 
-                
+            if (closeTask.Task.IsCompleted)
+                closeTask = new TaskCompletionSource();
+
             IsDialogOpen = true;
         }
 
@@ -29,6 +32,8 @@ namespace CariProje.ViewModels
             IsDialogOpen = false;
             closeTask.TrySetResult();
         }
+        
+        
     }
 
 }

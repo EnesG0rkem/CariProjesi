@@ -17,8 +17,7 @@ namespace CariProje.ViewModels
 
 
 
-        [ObservableProperty]
-        private bool _confirmed;
+        
         [RelayCommand]
         public void Confirm()
         {
