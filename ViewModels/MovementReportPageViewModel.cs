@@ -12,6 +12,7 @@ namespace CariProje.ViewModels
 {
     public partial class MovementReportPageViewModel : ViewModelBase
     {
+        #region properties
         private readonly MainWindowViewModel _mainWindow;
         public ObservableCollection<MovementRow> Movements { get; } = new();
 
@@ -54,7 +55,7 @@ namespace CariProje.ViewModels
                 FindCommand.Execute(value);
             }
         }
-
+        #endregion
         public MovementReportPageViewModel(MainWindowViewModel mainWindow)
         {
             _mainWindow = mainWindow;

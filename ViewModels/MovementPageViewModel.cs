@@ -37,9 +37,9 @@ public partial class MovementPageViewModel : ViewModelBase
         dialog.Message = message;
         dialog.CloseText = "Tamam";
         CurrentDialog = dialog;
-
         await dialog.WaitAsync();
         CurrentDialog = null;
+
     }
 
     private string _accountCode = string.Empty;
@@ -209,11 +209,11 @@ public partial class MovementPageViewModel : ViewModelBase
             MovementType = isCredit,
             MovementChange = MovementAmount
         };
-        await ShowConfirmationDialog("Emin misiniz?", "Hareketi kaydetmek istediğiznize emin misiniz?");
-        if (!CurrentDialog.Confirmed) return;
+        var result = await ShowConfirmationDialog("Emin misiniz?", "Hareketi kaydetmek istediğiznize emin misiniz?");
+        if (!result) return;
 
         await _movementService.AddAsync(newMovement);
-        await ShowMessageDialog("Başarılı", $"Hareket başarıyla kaydedildi. ({(isCredit ? "Alacak" : "Borç")})");
+        await ShowMessageDialog("Başarılı", "Hareket başarıyla kaydedildi.");
     }
 
     

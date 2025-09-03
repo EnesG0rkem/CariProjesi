@@ -24,7 +24,7 @@
         <vm:MovementPageViewModel/>
     </Design.DataContext>
 
-    <Grid RowDefinitions="Auto, Auto" Background="rgba(122, 122, 122, 1)">
+    <Grid RowDefinitions="Auto, Auto, *" Background="rgba(122, 122, 122, 1)">
 
         <!-- Buttons -->
         <Grid Row="0" ColumnDefinitions="Auto, Auto, *, Auto, Auto">
@@ -94,7 +94,7 @@
         </Grid>
 
         <!-- Dialog Overlay -->
-        <ContentControl Grid.Row="0" Grid.RowSpan="2"
+        <ContentControl Grid.Row="0" Grid.RowSpan="3"
                     Content="{Binding CurrentDialog}"
                     IsVisible="{Binding CurrentDialog, Converter={x:Static ObjectConverters.IsNotNull}}"
                     HorizontalAlignment="Stretch"
