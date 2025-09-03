@@ -199,8 +199,6 @@ public partial class AccountPageViewModel : ViewModelBase
             await _accountService.AddAsync(newAccount);
             await ShowMessageDialog("Başarılı", "Yeni cari başarıyla eklendi.");
         }
-
-        await Find();
     }
 
     [RelayCommand]

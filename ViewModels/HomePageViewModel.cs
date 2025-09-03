@@ -15,6 +15,7 @@ public partial class HomePageViewModel : ViewModelBase
     public void GoToAccountPage()
     {
         _mainWindow.CurrentPage = _mainWindow.AccountPage;
+        _mainWindow.AccountPage.Find();
     }
 
     [RelayCommand]
@@ -27,5 +28,6 @@ public partial class HomePageViewModel : ViewModelBase
     public void GoToMovementReportPage()
     {
         _mainWindow.CurrentPage = _mainWindow.MovementReportPage;
+        _mainWindow.MovementReportPage.Find(null);
     }
 }
